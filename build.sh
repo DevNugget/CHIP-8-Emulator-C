@@ -1,2 +1,1 @@
-gcc main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -o chip8
-./chip8
+gcc main.c chip8.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -o chip8

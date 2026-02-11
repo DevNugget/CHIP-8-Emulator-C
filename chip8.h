@@ -2,6 +2,7 @@
 #define CHIP8_H
 
 #include <stdint.h>
+#include "raylib.h"
 
 #define MEMORY_SIZE 4096
 #define STACK_SIZE 16
@@ -32,6 +33,12 @@
 #define DELAY_TIMER 0x1
 
 #define SPRITE_SIZE 15
+#define SCREEN_W 64
+#define SCREEN_H 32
+#define SCREEN_SIZE SCREEN_W*SCREEN_H
+#define SCALE 12
+
+#define PROGRAM_START 0x200
 
 typedef struct chip8_ctx {
 	uint8_t memory[MEMORY_SIZE];
@@ -45,10 +52,24 @@ typedef struct chip8_ctx {
 	uint16_t pc;
 	uint8_t sp;
 	uint16_t stack[STACK_SIZE];
+
+	Texture2D screen_texture;
+	Color pixel_data[SCREEN_SIZE];
 } chip8_ctx_t;
 
 typedef struct sprite {
 	uint8_t data[SPRITE_SIZE];
 } sprite_t;
+
+void chip8_init(chip8_ctx_t* ctx);
+void dump_chip8_memory(uint8_t memory[MEMORY_SIZE]);
+void load_font_to_mem(chip8_ctx_t* ctx);
+
+void screen_update(chip8_ctx_t* ctx);
+void screen_draw(chip8_ctx_t* ctx, int x, int y);
+
+void load_program_to_mem(chip8_ctx_t* ctx, const char* path);
+uint16_t fetch_inst(chip8_ctx_t* ctx);
+void decode_exec_inst(chip8_ctx_t* ctx, uint16_t inst);
 
 #endif
