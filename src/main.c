@@ -17,16 +17,22 @@ int main(int argc, char** argv) {
     }
 
     dump_chip8_memory(chip8.memory);
+    const int instructions_per_frame = 10;
+
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
         if (chip8.sp_regs[DELAY_TIMER] > 0) chip8.sp_regs[DELAY_TIMER]--;
         if (chip8.sp_regs[SOUND_TIMER] > 0) chip8.sp_regs[SOUND_TIMER]--;
 
-        BeginDrawing();
-            screen_draw(&chip8, 0,0);
+        for (int i = 0; i < instructions_per_frame; i++) {
             uint16_t inst = fetch_inst(&chip8);
             decode_exec_inst(&chip8, inst);
+        }
+
+        BeginDrawing();
+            screen_draw(&chip8, 0, 0);
         EndDrawing();
     }
 
