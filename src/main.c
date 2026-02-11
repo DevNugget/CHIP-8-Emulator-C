@@ -5,6 +5,7 @@
 
 int main(int argc, char** argv) {
     InitWindow(SCREEN_W * SCALE, SCREEN_H * SCALE, "CHIP 8 Emulator");
+    
     chip8_ctx_t chip8;
     chip8_init(&chip8);
 
@@ -19,6 +20,9 @@ int main(int argc, char** argv) {
 
     while (!WindowShouldClose())
     {
+        if (chip8.sp_regs[DELAY_TIMER] > 0) chip8.sp_regs[DELAY_TIMER]--;
+        if (chip8.sp_regs[SOUND_TIMER] > 0) chip8.sp_regs[SOUND_TIMER]--;
+
         BeginDrawing();
             screen_draw(&chip8, 0,0);
             uint16_t inst = fetch_inst(&chip8);

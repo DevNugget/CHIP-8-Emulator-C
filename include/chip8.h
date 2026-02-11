@@ -65,6 +65,7 @@ void chip8_init(chip8_ctx_t* ctx);
 void dump_chip8_memory(uint8_t memory[MEMORY_SIZE]);
 void load_font_to_mem(chip8_ctx_t* ctx);
 
+void screen_init(chip8_ctx_t* ctx);
 void screen_update(chip8_ctx_t* ctx);
 void screen_draw(chip8_ctx_t* ctx, int x, int y);
 
